@@ -8,6 +8,16 @@ void uart_close(void)
     
 }
 
+void uart_baud_set(void)
+{
+    
+}
+
+void uart_baud_get(void)
+{
+    
+}
+
 void uart_pin_set(void)
 {
     
