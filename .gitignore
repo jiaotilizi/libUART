@@ -1,6 +1,8 @@
+*.so
+*.so*
 *.o
-*.db
 *~
 *.*.swp
 *.*.kate-swp
 .directory
+GIT_COMMIT.txt
