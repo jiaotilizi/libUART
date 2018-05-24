@@ -421,6 +421,7 @@ uart_t *uart_open(const char *dev, int baud, const char *opt)
     }
     
     p->baud = baud;
+    init(p);
     return p;
 }
 
