@@ -5,7 +5,7 @@
  * Project  : libuart
  * Author   : Copyright (C) 2018 krjdev@gmail.com
  * Created  : 2018-05-21
- * Modified : 
+ * Modified : 2018-05-25
  * Revised  : 
  * Version  : 0.1.0.0
  * License  : BSD-3-Clause (see file LICENSE.txt)
@@ -57,6 +57,12 @@ void printerr_ioctl(const char *err_msg)
 {
     printerr();
     fprintf(stderr, "ioctl failed (%s)\n", err_msg);
+}
+
+void printerr_fcntl(const char *err_msg)
+{
+    printerr();
+    fprintf(stderr, "fcntl failed (%s)\n", err_msg);
 }
 
 void printerr_pointer_null(void)

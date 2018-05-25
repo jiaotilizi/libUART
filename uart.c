@@ -5,7 +5,7 @@
  * Project  : libuart
  * Author   : Copyright (C) 2018 krjdev@gmail.com
  * Created  : 2018-05-21
- * Modified : 2018-05-24
+ * Modified : 2018-05-25
  * Revised  : 
  * Version  : 0.1.0.0
  * License  : BSD-3-Clause (see file LICENSE.txt)
@@ -223,6 +223,7 @@ static int parse_option(uart_t *uart, const char *opt)
 
 static void init(uart_t *uart)
 {
+    int ret;
     struct termios options;
     
     if (!uart) {
@@ -231,7 +232,13 @@ static void init(uart_t *uart)
     }
     
     /* set non-blocking mode*/
-    fcntl(uart->fd, F_SETFL, FNDELAY);
+    ret = fcntl(uart->fd, F_SETFL, FNDELAY);
+    
+    if (ret == -1) {
+        printerr_fcntl(strerror(errno));
+        return;
+    }
+    
     tcgetattr(uart->fd, &options);
     /* set baud */
     switch (uart->baud) {

@@ -5,7 +5,7 @@
  * Project  : libuart
  * Author   : Copyright (C) 2018 krjdev@gmail.com
  * Created  : 2018-05-21
- * Modified : 2018-05-23
+ * Modified : 2018-05-25
  * Revised  : 
  * Version  : 0.1.0.0
  * License  : BSD-3-Clause (see file LICENSE.txt)
@@ -28,6 +28,7 @@ extern void printerr_open(const char *err_msg);
 extern void printerr_read(const char *err_msg);
 extern void printerr_write(const char *err_msg);
 extern void printerr_ioctl(const char *err_msg);
+extern void printerr_fcntl(const char *err_msg);
 
 /* error_uart.c */
 extern void printerr_uart_type_invalid(void);
