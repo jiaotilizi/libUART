@@ -53,6 +53,12 @@ void printerr_write(const char *err_msg)
     fprintf(stderr, "couldn't write (%s)\n", err_msg);
 }
 
+void printerr_ioctl(const char *err_msg)
+{
+    printerr();
+    fprintf(stderr, "ioctl failed (%s)\n", err_msg);
+}
+
 void printerr_pointer_null(void)
 {
     printerr();

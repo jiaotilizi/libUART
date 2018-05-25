@@ -482,14 +482,19 @@ int uart_recv(uart_t *uart, char *recv_buf, int len)
 
 void uart_pin_set(uart_t *uart, int pin, int state)
 {
-    int status;
+    int status, ret;
     
     if (!uart) {
         printerr_uart_type_invalid();
         return;
     }
     
-    ioctl(uart->fd, TIOCMGET, &status);
+    ret = ioctl(uart->fd, TIOCMGET, &status);
+    
+    if (ret == -1) {
+        printerr_ioctl(strerror(errno));
+        return;
+    }
     
     switch (pin) {
     case UART_PIN_RTS:
@@ -533,6 +538,11 @@ void uart_pin_set(uart_t *uart, int pin, int state)
     }
     
     ioctl(uart->fd, TIOCMSET, status);
+    
+    if (ret == -1) {
+        printerr_ioctl(strerror(errno));
+        return;
+    }
 }
 
 int uart_pin_get(uart_t *uart, int pin)
@@ -546,6 +556,11 @@ int uart_pin_get(uart_t *uart, int pin)
     }
     
     ioctl(uart->fd, TIOCMGET, &status);
+    
+    if (ret == -1) {
+        printerr_ioctl(strerror(errno));
+        return -1;
+    }
     
     switch (pin) {
     case UART_PIN_RTS:
@@ -602,6 +617,12 @@ int uart_bytes_get(uart_t *uart)
     }
     
     ioctl(uart->fd, FIONREAD, &ret);
+    
+    if (ret == -1) {
+        printerr_ioctl(strerror(errno));
+        return -1;
+    }
+    
     return ret;
 }
 

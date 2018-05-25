@@ -27,6 +27,7 @@ extern void printerr_string_null(void);
 extern void printerr_open(const char *err_msg);
 extern void printerr_read(const char *err_msg);
 extern void printerr_write(const char *err_msg);
+extern void printerr_ioctl(const char *err_msg);
 
 /* error_uart.c */
 extern void printerr_uart_type_invalid(void);
