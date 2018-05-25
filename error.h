@@ -40,5 +40,6 @@ extern void printerr_uart_parity_invalid(void);
 extern void printerr_uart_stop_invalid(void);
 extern void printerr_uart_flow_invalid(void);
 extern void printerr_uart_pin_invalid(void);
+extern void printerr_uart_termios(const char *err_msg);
 
 #endif

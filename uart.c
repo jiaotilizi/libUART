@@ -239,76 +239,286 @@ static void init(uart_t *uart)
         return;
     }
     
-    tcgetattr(uart->fd, &options);
+    ret = tcgetattr(uart->fd, &options);
+    
+    if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+    }
+    
     /* set baud */
     switch (uart->baud) {
     case UART_BAUD_0:
-        cfsetispeed(&options, B0);
-        cfsetospeed(&options, B0);
+        ret = cfsetispeed(&options, B0);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
+        ret = cfsetospeed(&options, B0);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
         break;
     case UART_BAUD_50:
-        cfsetispeed(&options, B50);
-        cfsetospeed(&options, B50);
+        ret = cfsetispeed(&options, B50);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
+        ret = cfsetospeed(&options, B50);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
         break;
     case UART_BAUD_75:
-        cfsetispeed(&options, B75);
-        cfsetospeed(&options, B75);
+        ret = cfsetispeed(&options, B75);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
+        ret = cfsetospeed(&options, B75);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
         break;
     case UART_BAUD_110:
-        cfsetispeed(&options, B110);
-        cfsetospeed(&options, B110);
+        ret = cfsetispeed(&options, B110);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
+        ret = cfsetospeed(&options, B110);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
         break;
     case UART_BAUD_134:
-        cfsetispeed(&options, B134);
-        cfsetospeed(&options, B134);
+        ret = cfsetispeed(&options, B134);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
+        ret = cfsetospeed(&options, B134);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
         break;
     case UART_BAUD_150:
-        cfsetispeed(&options, B150);
-        cfsetospeed(&options, B150);
+        ret = cfsetispeed(&options, B150);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
+        ret = cfsetospeed(&options, B150);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
         break;
     case UART_BAUD_200:
-        cfsetispeed(&options, B200);
-        cfsetospeed(&options, B200);
+        ret = cfsetispeed(&options, B200);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
+        ret = cfsetospeed(&options, B200);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
         break;
     case UART_BAUD_300:
-        cfsetispeed(&options, B300);
-        cfsetospeed(&options, B300);
+        ret = cfsetispeed(&options, B300);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
+        ret = cfsetospeed(&options, B300);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
         break;
     case UART_BAUD_600:
-        cfsetispeed(&options, B600);
-        cfsetospeed(&options, B600);
+        ret = cfsetispeed(&options, B600);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
+        ret = cfsetospeed(&options, B600);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
         break;
     case UART_BAUD_1200:
-        cfsetispeed(&options, B1200);
-        cfsetospeed(&options, B1200);
+        ret = cfsetispeed(&options, B1200);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
+        ret = cfsetospeed(&options, B1200);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
         break;
     case UART_BAUD_2400:
-        cfsetispeed(&options, B2400);
-        cfsetospeed(&options, B2400);
+        ret = cfsetispeed(&options, B2400);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
+        ret = cfsetospeed(&options, B2400);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
         break;
     case UART_BAUD_4800:
-        cfsetispeed(&options, B4800);
-        cfsetospeed(&options, B4800);
+        ret = cfsetispeed(&options, B4800);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
+        ret = cfsetospeed(&options, B4800);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
         break;
     case UART_BAUD_9600:
-        cfsetispeed(&options, B9600);
-        cfsetospeed(&options, B9600);
+        ret = cfsetispeed(&options, B9600);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
+        ret = cfsetospeed(&options, B9600);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
         break;
     case UART_BAUD_19200:
-        cfsetispeed(&options, B19200);
-        cfsetospeed(&options, B19200);
+        ret = cfsetispeed(&options, B19200);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
+        ret = cfsetospeed(&options, B19200);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
         break;
     case UART_BAUD_38400:
-        cfsetispeed(&options, B38400);
-        cfsetospeed(&options, B38400);
+        ret = cfsetispeed(&options, B38400);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
+        ret = cfsetospeed(&options, B38400);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
         break;
     case UART_BAUD_57600:
-        cfsetispeed(&options, B57600);
-        cfsetospeed(&options, B57600);
+        ret = cfsetispeed(&options, B57600);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
+        ret = cfsetospeed(&options, B57600);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
         break;
     case UART_BAUD_115200:
-        cfsetispeed(&options, B115200);
-        cfsetospeed(&options, B115200);
+        ret = cfsetispeed(&options, B115200);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
+        ret = cfsetospeed(&options, B115200);
+        
+        if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+        }
+        
         break;
     default:
         break;
@@ -388,7 +598,12 @@ static void init(uart_t *uart)
     
     /* enable receiver and set local mode */
     options.c_cflag |= (CLOCAL | CREAD);    
-    tcsetattr(uart->fd, TCSANOW, &options);
+    ret = tcsetattr(uart->fd, TCSANOW, &options);
+    
+    if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return;
+    }
 }
 
 uart_t *uart_open(const char *dev, int baud, const char *opt)

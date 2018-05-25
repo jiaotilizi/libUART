@@ -77,3 +77,9 @@ void printerr_uart_pin_invalid(void)
     printerr();
     fprintf(stderr, "invalid control pin\n");
 }
+
+void printerr_uart_termios(const char *err_msg)
+{
+    printerr();
+    fprintf(stderr, "termios failed (%s)\n", err_msg);
+}
