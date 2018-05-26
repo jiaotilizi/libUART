@@ -221,46 +221,32 @@ static int parse_option(uart_t *uart, const char *opt)
     return 0;
 }
 
-static void init(uart_t *uart)
+static int init_baud(uart_t *uart)
 {
     int ret;
     struct termios options;
-    
-    if (!uart) {
-        printerr_uart_type_invalid();
-        return;
-    }
-    
-    /* set non-blocking mode*/
-    ret = fcntl(uart->fd, F_SETFL, FNDELAY);
-    
-    if (ret == -1) {
-        printerr_fcntl(strerror(errno));
-        return;
-    }
     
     ret = tcgetattr(uart->fd, &options);
     
     if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
     }
     
-    /* set baud */
     switch (uart->baud) {
     case UART_BAUD_0:
         ret = cfsetispeed(&options, B0);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         ret = cfsetospeed(&options, B0);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         break;
@@ -269,14 +255,14 @@ static void init(uart_t *uart)
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         ret = cfsetospeed(&options, B50);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         break;
@@ -285,14 +271,14 @@ static void init(uart_t *uart)
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         ret = cfsetospeed(&options, B75);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         break;
@@ -301,14 +287,14 @@ static void init(uart_t *uart)
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         ret = cfsetospeed(&options, B110);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         break;
@@ -317,14 +303,14 @@ static void init(uart_t *uart)
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         ret = cfsetospeed(&options, B134);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         break;
@@ -333,14 +319,14 @@ static void init(uart_t *uart)
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         ret = cfsetospeed(&options, B150);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         break;
@@ -349,14 +335,14 @@ static void init(uart_t *uart)
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         ret = cfsetospeed(&options, B200);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         break;
@@ -365,14 +351,14 @@ static void init(uart_t *uart)
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         ret = cfsetospeed(&options, B300);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         break;
@@ -381,14 +367,14 @@ static void init(uart_t *uart)
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         ret = cfsetospeed(&options, B600);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         break;
@@ -397,14 +383,14 @@ static void init(uart_t *uart)
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         ret = cfsetospeed(&options, B1200);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         break;
@@ -413,14 +399,14 @@ static void init(uart_t *uart)
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         ret = cfsetospeed(&options, B2400);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         break;
@@ -429,14 +415,14 @@ static void init(uart_t *uart)
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         ret = cfsetospeed(&options, B4800);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         break;
@@ -445,14 +431,14 @@ static void init(uart_t *uart)
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         ret = cfsetospeed(&options, B9600);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         break;
@@ -461,14 +447,14 @@ static void init(uart_t *uart)
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         ret = cfsetospeed(&options, B19200);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         break;
@@ -477,14 +463,14 @@ static void init(uart_t *uart)
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         ret = cfsetospeed(&options, B38400);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         break;
@@ -493,14 +479,14 @@ static void init(uart_t *uart)
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         ret = cfsetospeed(&options, B57600);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         break;
@@ -509,14 +495,14 @@ static void init(uart_t *uart)
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         ret = cfsetospeed(&options, B115200);
         
         if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
         }
         
         break;
@@ -524,7 +510,28 @@ static void init(uart_t *uart)
         break;
     }
     
-    /* set data bits */
+    ret = tcsetattr(uart->fd, TCSANOW, &options);
+    
+    if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return -1;
+    }
+    
+    return 0;
+}
+
+static int init_databits(uart_t *uart)
+{
+    int ret;
+    struct termios options;
+    
+    ret = tcgetattr(uart->fd, &options);
+    
+    if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return -1;
+    }
+    
     switch (uart->data_bits) {
     case 5:
         options.c_cflag &= ~CSIZE;
@@ -546,7 +553,28 @@ static void init(uart_t *uart)
         break;
     }
     
-    /* set parity */
+    ret = tcsetattr(uart->fd, TCSANOW, &options);
+    
+    if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return -1;
+    }
+    
+    return 0;
+}
+
+static int init_parity(uart_t *uart)
+{
+    int ret;
+    struct termios options;
+    
+    ret = tcgetattr(uart->fd, &options);
+    
+    if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return -1;
+    }
+    
     switch (uart->parity) {
     case UART_PARITY_NO:
         options.c_cflag &= ~PARENB;
@@ -563,7 +591,28 @@ static void init(uart_t *uart)
         break;
     }
     
-    /* set stop bits */
+    ret = tcsetattr(uart->fd, TCSANOW, &options);
+    
+    if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return -1;
+    }
+    
+    return 0;
+}
+
+static int init_stopbits(uart_t *uart)
+{
+    int ret;
+    struct termios options;
+    
+    ret = tcgetattr(uart->fd, &options);
+    
+    if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return -1;
+    }
+    
     switch (uart->stop_bits) {
     case 1:
         options.c_cflag &= ~CSTOPB;
@@ -575,7 +624,28 @@ static void init(uart_t *uart)
         break;
     }
     
-    /* set flow control */
+    ret = tcsetattr(uart->fd, TCSANOW, &options);
+    
+    if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return -1;
+    }
+    
+    return 0;
+}
+
+static int init_flow(uart_t *uart)
+{
+    int ret;
+    struct termios options;
+    
+    ret = tcgetattr(uart->fd, &options);
+    
+    if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return -1;
+    }
+    
     switch (uart->flow_ctrl) {
     case UART_FLOW_NO:
         options.c_cflag &= ~CRTSCTS;
@@ -593,17 +663,84 @@ static void init(uart_t *uart)
         break;
     }
     
-    /* set raw input mode */
-    options.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
-    
-    /* enable receiver and set local mode */
-    options.c_cflag |= (CLOCAL | CREAD);    
     ret = tcsetattr(uart->fd, TCSANOW, &options);
     
     if (ret == -1) {
             printerr_uart_termios(strerror(errno));
-            return;
+            return -1;
     }
+    
+    return 0;
+}
+
+static int init(uart_t *uart)
+{
+    int ret;
+    struct termios options;
+    
+    if (!uart) {
+        printerr_uart_type_invalid();
+        return -1;
+    }
+    
+    /* set non-blocking mode*/
+    ret = fcntl(uart->fd, F_SETFL, FNDELAY);
+    
+    if (ret == -1) {
+        printerr_fcntl(strerror(errno));
+        return -1;
+    }
+    
+    /* set baud rate */
+    ret = init_baud(uart);
+    
+    if (ret == -1)
+        return -1;
+    
+    /* set data bits */
+    ret = init_databits(uart);
+    
+    if (ret == -1)
+        return -1;
+    
+    /* set parity */
+    ret = init_parity(uart);
+    
+    if (ret == -1)
+        return -1;
+    
+    /* set stop bits */
+    ret = init_stopbits(uart);
+    
+    if (ret == -1)
+        return -1;
+    
+    /* set flow control */
+    ret = init_flow(uart);
+    
+    if (ret == -1)
+        return -1;
+    
+    ret = tcgetattr(uart->fd, &options);
+    
+    if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return -1;
+    }
+    
+    /* set raw input mode */
+    options.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
+    
+    /* enable receiver and set local mode */
+    options.c_cflag |= (CLOCAL | CREAD);
+    ret = tcsetattr(uart->fd, TCSANOW, &options);
+    
+    if (ret == -1) {
+            printerr_uart_termios(strerror(errno));
+            return -1;
+    }
+    
+    return 0;
 }
 
 uart_t *uart_open(const char *dev, int baud, const char *opt)
@@ -643,7 +780,11 @@ uart_t *uart_open(const char *dev, int baud, const char *opt)
     }
     
     p->baud = baud;
-    init(p);
+    ret = init(p);
+    
+    if (ret == -1)
+        return NULL;
+    
     return p;
 }
 
@@ -860,8 +1001,8 @@ void uart_baud_set(uart_t *uart, int baud)
         return;
     }
     
-    uart->baud = baud;
-    init(uart);
+    uart->baud = baud;    
+    init_baud(uart);
 }
 
 int uart_baud_get(uart_t *uart)
@@ -918,7 +1059,7 @@ void uart_databits_set(uart_t *uart, int data_bits)
     }
     
     uart->data_bits = data_bits;
-    init(uart);
+    init_databits(uart);
 }
 
 int uart_databits_get(uart_t *uart)
@@ -945,7 +1086,7 @@ void uart_parity_set(uart_t *uart, int parity)
     }
     
     uart->parity = parity;
-    init(uart);
+    init_parity(uart);
 }
 
 int uart_parity_get(uart_t *uart)
@@ -972,7 +1113,7 @@ void uart_stopbits_set(uart_t *uart, int stop_bits)
     }
     
     uart->stop_bits = stop_bits;
-    init(uart);
+    init_stopbits(uart);
 }
 
 int uart_stopbits_get(uart_t *uart)
@@ -999,7 +1140,7 @@ void uart_flow_set(uart_t *uart, int flow_ctrl)
     }
     
     uart->flow_ctrl = flow_ctrl;
-    init(uart);
+    init_flow(uart);
 }
 
 int uart_flow_get(uart_t *uart)
