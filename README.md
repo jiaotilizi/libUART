@@ -13,7 +13,7 @@ Open a UART port connection.
 Arg | Description
 --- | -----------
 *dev* | The device name of the UART port
-*baud* | The baud rate of the UART port (Use the *enums* in the header file, other values where not accepted)
+*baud* | The baud rate of the UART port (Use the *enums* in the header file, other values are not accepted)
 *opt* | The configuration string of the UART port
 
 The configuration string must be 4 chars long. The first char represents the number of data bits (valid values are **5**, **6**, **7** or **8**), the second char represents the parity (valid values are **N** for No parity, **O** for Odd parity or **E** for Even parity), the third char represents the number of stop bits (valid values are **1** or **2**) and the fourth char represents the flow control (valid values are **N** for No flow control, **S** for Software flow control or **H** for Hardware flow control).
@@ -62,7 +62,7 @@ Receive data from the UART port.
 Arg | Description
 --- | -----------
 *uart* | The *uart_t* object
-*send\_buf* | The pointer where the received data is stored
+*recv\_buf* | The pointer where the received data is stored
 *len* | The length of the data in bytes
 
 
