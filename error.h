@@ -5,10 +5,10 @@
  * Project  : libuart
  * Author   : Copyright (C) 2018 krjdev@gmail.com
  * Created  : 2018-05-21
- * Modified : 2018-05-25
+ * Modified : 2018-06-19
  * Revised  : 
- * Version  : 0.1.0.0
- * License  : BSD-3-Clause (see file LICENSE.txt)
+ * Version  : 0.2.0.0
+ * License  : ISC (see file LICENSE.txt)
  *
  * NOTE: This code is currently below version 1.0, and therefore is considered
  * to be lacking in some functionality or documentation, or may not be fully
@@ -27,8 +27,10 @@ extern void printerr_string_null(void);
 extern void printerr_open(const char *err_msg);
 extern void printerr_read(const char *err_msg);
 extern void printerr_write(const char *err_msg);
+#ifdef __unix__
 extern void printerr_ioctl(const char *err_msg);
 extern void printerr_fcntl(const char *err_msg);
+#endif /* __unix__ */
 
 /* error_uart.c */
 extern void printerr_uart_type_invalid(void);
@@ -40,6 +42,10 @@ extern void printerr_uart_parity_invalid(void);
 extern void printerr_uart_stop_invalid(void);
 extern void printerr_uart_flow_invalid(void);
 extern void printerr_uart_pin_invalid(void);
+#ifdef __unix__
 extern void printerr_uart_termios(const char *err_msg);
+#elif _WIN32
+extern void printerr_uart_comm(const char *err_msg);
+#endif /* __unix__ or _WIN32 */
 
 #endif

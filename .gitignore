@@ -1,3 +1,4 @@
+# Linux
 *.so
 *.so*
 *.o
@@ -5,4 +6,20 @@
 *.*.swp
 *.*.kate-swp
 .directory
-GIT_COMMIT.txt
+
+# Viual Studio
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vs/
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
