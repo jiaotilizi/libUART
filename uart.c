@@ -18,8 +18,8 @@
  
 #include <stdio.h>
 #include <stdlib.h>
-#ifdef __unix__
 #include <string.h>
+#ifdef __unix__
 #include <fcntl.h>
 #include <errno.h>
 #include <unistd.h>
@@ -1437,18 +1437,10 @@ int uart_send(uart_t *uart, char *send_buf, int len)
 {
     int ret;
 #ifdef _WIN32
-    char *buf;
     DWORD dwbytestowrite = (DWORD) len;
     DWORD dwbyteswritten;
     DWORD dwerror;
     LPVOID lpmessage;
-
-    buf = (char *) malloc(len);
-
-    if (!buf) {
-        printerr_alloc(strerror(errno));
-        return -1;
-    }
 #endif /* _WIN32 */
     
     if (!uart) {
@@ -1465,7 +1457,7 @@ int uart_send(uart_t *uart, char *send_buf, int len)
     }
 #elif _WIN32
     ret = WriteFile(uart->h, 
-                    (LPVOID) buf, 
+                    (LPVOID) send_buf, 
                     dwbytestowrite, 
                     &dwbyteswritten, 
                     NULL);
