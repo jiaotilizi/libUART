@@ -1366,7 +1366,7 @@ uart_t *uart_open(const char *dev, int baud, const char *opt)
 #ifdef __unix__
     fd = open(p->dev, O_RDWR | O_NOCTTY | O_NDELAY);
     
-    if (!fd) {
+    if (fd == -1) {
         printerr_open(strerror(errno));
         return NULL;
     }
