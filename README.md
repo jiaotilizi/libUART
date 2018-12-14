@@ -93,7 +93,7 @@ On success, the baud rate will be returned. On error, -1 will be returned.
 
 ### int uart\_fd\_get(uart\_t *uart)
 
-Get the file descriptor from the UART port.
+Get the file descriptor from the UART port. (Linux/UNIX only) 
 
 #### Arguments:
 Arg | Description
@@ -102,6 +102,18 @@ Arg | Description
 
 #### Return:
 On success, the file descriptor will be returned. On error, -1 will be returned.
+
+### int uart\_handle\_get(uart\_t *uart)
+
+Get the handle from the UART port. (Windows only)
+
+#### Arguments:
+Arg | Description
+--- | -----------
+*uart* | The *uart_t* object
+
+#### Return:
+On success, the handle will be returned. On error, -1 will be returned.
 
 ### char *uart\_dev\_get(uart\_t *uart)
 

@@ -3,7 +3,7 @@
  * File Name: error.h
  * Title    : UART library error messages header
  * Project  : libuart
- * Author   : Copyright (C) 2018 krjdev@gmail.com
+ * Author   : Copyright (C) 2018 Johannes Krottmayer <krjdev@gmail.com>
  * Created  : 2018-05-21
  * Modified : 2018-06-19
  * Revised  : 
