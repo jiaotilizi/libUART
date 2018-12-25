@@ -5,9 +5,9 @@
  * Project  : libuart
  * Author   : Copyright (C) 2018 Johannes Krottmayer <krjdev@gmail.com>
  * Created  : 2018-05-21
- * Modified : 2018-06-19
+ * Modified : 2018-12-25
  * Revised  : 
- * Version  : 0.2.0.0
+ * Version  : 0.2.0.1
  * License  : ISC (see file LICENSE.txt)
  *
  * NOTE: This code is currently below version 1.0, and therefore is considered
@@ -1381,7 +1381,7 @@ uart_t *uart_open(const char *dev, int baud, const char *opt)
                    0,
                    NULL);
     
-    if (!ret) {
+    if (h == INVALID_HANDLE_VALUE) {
         dwerror = GetLastError();
         FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER | 
                   FORMAT_MESSAGE_IGNORE_INSERTS, 
@@ -1612,7 +1612,7 @@ void uart_pin_set(uart_t *uart, int pin, int state)
                   NULL);
         printerr_uart_comm((const char *) lpmessage);
         LocalFree(lpmessage);
-        return -1;
+        return;
     }
 #endif /* __unix__ or _WIN32 */
 }
@@ -1794,7 +1794,7 @@ HANDLE uart_handle_get(uart_t *uart)
 {
     if (!uart) {
         printerr_uart_type_invalid();
-        return -1;
+        return INVALID_HANDLE_VALUE;
     }
     
     return uart->h;
