@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="error.c">
+    <ClCompile Include="src\error.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="error_uart.c">
+    <ClCompile Include="src\error_uart.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="uart.c">
+    <ClCompile Include="src\uart.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="error.h">
+    <ClInclude Include="src\error.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="uart.h">
+    <ClInclude Include="src\uart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
