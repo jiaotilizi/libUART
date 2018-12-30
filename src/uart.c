@@ -5,9 +5,9 @@
  * Project  : libuart
  * Author   : Copyright (C) 2018 Johannes Krottmayer <krjdev@gmail.com>
  * Created  : 2018-05-21
- * Modified : 2018-12-25
+ * Modified : 2018-12-30
  * Revised  : 
- * Version  : 0.2.0.1
+ * Version  : 0.2.1.0
  * License  : ISC (see file LICENSE.txt)
  *
  * NOTE: This code is currently below version 1.0, and therefore is considered
@@ -1352,10 +1352,27 @@ uart_t *uart_open(const char *dev, int baud, const char *opt)
     
     p = malloc(sizeof(uart_t));
     
+#ifdef __unix__
     if (!p) {
         printerr_alloc(strerror(errno));
         return NULL;
     }
+#elif _WIN32
+	if (!p) {
+		dwerror = GetLastError();
+		FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER |
+			FORMAT_MESSAGE_IGNORE_INSERTS,
+			NULL,
+			dwerror,
+			MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+			(LPTSTR) &lpmessage,
+			0,
+			NULL);
+		printerr_alloc((const char *) lpmessage);
+		LocalFree(lpmessage);
+		return NULL;
+	}
+#endif
     
     if (strlen(dev) >= BUFSZ) {
         printerr_uart_dev_too_long();
