@@ -2,11 +2,10 @@
 
 Easy to use library for accessing the UART (RS232) interface.
 
-
 ## Functions:
 
 ```c
-uart_t *uart_open(const char *dev, int baud, const char *opt);
+uart_t *libUART_open(const char *dev, int baud, const char *opt);
 ```
 
 Open a UART port connection.
@@ -31,10 +30,10 @@ N | No parity
 N | No flow control
 
 #### Return:
-On success, an *uart\_t* object will be returned. On error, a NULL pointer will be returned.
+On success, an *uart\_t* object will be returned. On error, a *NULL* pointer will be returned.
 
 ```c
-void uart_close(uart_t *uart);
+void libUART_close(uart_t *uart);
 ```
 
 Close the connection.
@@ -45,7 +44,7 @@ Arg | Description
 *uart* | The *uart_t* object
 
 ```c
-int uart_send(uart_t *uart, char *send_buf, int len);
+int libUART_send(uart_t *uart, char *send_buf, int len);
 ```
 
 Transmit data via UART.
@@ -58,10 +57,10 @@ Arg | Description
 *len* | The length of the data in bytes
 
 #### Return:
-On success, the number of transmited bytes will be returned. On error, -1 will be returned.
+On success, the number of transmited bytes will be returned. On error, *-1* will be returned.
 
 ```c
-int uart_recv(uart_t *uart, char *recv_buf, int len);
+int libUART_recv(uart_t *uart, char *recv_buf, int len);
 ```
 
 Receive data from the UART port.
@@ -75,10 +74,10 @@ Arg | Description
 
 
 #### Return:
-On success, the number of received bytes will be returned. On error, -1 will be returned.
+On success, the number of received bytes will be returned. On error, *-1* will be returned.
 
 ```c
-void uart_baud_set(uart_t *uart, int baud);
+int libUART_set_baud(uart_t *uart, int baud);
 ```
 
 Set the baud rate from the UART port.
@@ -90,7 +89,7 @@ Arg | Description
 *baud* | The baud rate (Use the *enums* in the header file, other values where not accepted)
 
 ```c
-int uart_baud_get(uart_t *uart);
+libUART_get_baud(uart_t *uart, int *baud);
 ```
 
 Get the current baud rate from the UART port.
@@ -104,7 +103,7 @@ Arg | Description
 On success, the baud rate will be returned. On error, -1 will be returned.
 
 ```c
-int uart_fd_get(uart_t *uart);
+int libUART_get_fd(uart_t *uart, int *fd);
 ```
 
 Get the file descriptor from the UART port. (Linux/UNIX only) 
@@ -118,7 +117,7 @@ Arg | Description
 On success, the file descriptor will be returned. On error, -1 will be returned.
 
 ```c
-HANDLE uart_handle_get(uart_t *uart);
+int libUART_get_handle(uart_t *uart, HANDLE *handle);
 ```
 Get the handle from the UART port. (Windows only)
 
@@ -131,7 +130,7 @@ Arg | Description
 On success, the handle will be returned. On error, -1 will be returned.
 
 ```c
-char *uart_dev_get(uart_t *uart);
+int libUART_get_dev(uart_t *uart, char **dev);
 ```
 
 Get the device of the from the UART port.
@@ -145,7 +144,7 @@ Arg | Description
 On success, the device name will be returned. After usage the string must be freed. On error, a NULL pointer will be returned.
 
 ```c
-void uart_databits_set(uart_t *uart, int data_bits);
+int libUART_set_databits(uart_t *uart, int data_bits);
 ```
 
 Set the data bits from the UART port.
@@ -157,7 +156,7 @@ Arg | Description
 *data\_bits* | The number of data bits (valid values are **5**, **6**, **7** ot **8**)
 
 ```c
-int uart_databits_get(uart_t *uart);
+int libUART_get_databits(uart_t *uart, int *data_bits);
 ```
 
 Get the data bits from the uart port.
@@ -171,7 +170,7 @@ Arg | Description
 On success, the number of data bits will be returned. On error, -1 will be returned.
 
 ```c
-void uart_parity_set(uart_t *uart, int parity);
+int libUART_set_parity(uart_t *uart, int parity);
 ```
 
 Set the parity from the UART port.
@@ -183,7 +182,7 @@ Arg | Description
 *parity* | The parity (valid values are **UART\_PARITY\_NO**, **UART\_PARITY\_ODD** or **UART\_PARITY\_EVEN**)
 
 ```c
-int uart_parity_get(uart_t *uart);
+int libUART_get_parity(uart_t *uart, int *parity);
 ```
 
 Get the parity from the UART port.
@@ -197,7 +196,7 @@ Arg | Description
 On success, the parity will be returned. On error, -1 will be returned.
 
 ```c
-void uart_stopbits_set(uart_t *uart, int stop_bits);
+int libUART_set_stopbits(uart_t *uart, int stop_bits);
 ```
 
 Set the stop bits from the UART port.
@@ -209,7 +208,7 @@ Arg | Description
 *stop\_bits* | The number of stop bits (valid values are **1** or **2**)
 
 ```c
-int uart_stopbits_get(uart_t *uart);
+int libUART_get_stopbits(uart_t *uart, int *stop_bits);
 ```
 
 Get the stop bits from the UART port.
@@ -223,7 +222,7 @@ Arg | Description
 On success, the number of stop bits will be returned. On error, -1 will be returned.
 
 ```c
-void uart_flow_set(uart_t *uart, int flow_ctrl);
+int libUART_set_flowctrl(uart_t *uart, int flow_ctrl);
 ```
 
 Set the flow control from the UART port.
@@ -236,7 +235,7 @@ Arg | Description
 *flow\_ctrl* | The flow control (valid values are **UART\_FLOW\_NO**, **UART\_FLOW\_SOFTWARE** or **UART\_FLOW\_HARDWARE**)
 
 ```c
-int uart_flow_get(uart_t *uart);
+int libUART_get_flowctrl(uart_t *uart, int *flow_ctrl);
 ```
 
 Get the flow control from the UART port.
@@ -250,7 +249,7 @@ Arg | Description
 On success, the flow control will be returned. On error, -1 will be returned.
 
 ```c
-void uart_pin_set(uart_t *uart, int pin, int state);
+int libUART_set_pin(uart_t *uart, int pin, int state);
 ```
 
 Set the state of a specific pin from the UART port.
@@ -273,7 +272,7 @@ UART\_PIN\_DTR | Data Terminal Ready
 UART\_PIN\_RI | Ring Indicator
 
 ```c
-int uart_pin_get(uart_t *uart, int pin);
+int libUART_get_pin(uart_t *uart, int pin, int *state);
 ```
 
 Get the state of a specific pin from the UART port.
@@ -288,7 +287,7 @@ Arg | Description
 On success, the state of the pin will be returned. On error, -1 will be returned.
 
 ```c
-int uart_bytes_get(uart_t *uart);
+int libUART_get_bytes_available(uart_t *uart, int *num);
 ```
 
 Get the current available bytes in the receive buffer.
@@ -300,3 +299,36 @@ Arg | Description
 
 #### Return:
 On success, the number of bytes in the receive buffer will be returned. On error, -1 will be returned.
+
+```c
+char *libUART_get_libname(void);
+```
+
+Get the library name.
+
+```c
+char *libUART_get_libversion(void);
+```
+
+Get the library version.
+
+```c
+char *libUART_get_libname(void);
+```
+
+Get the library copyright.
+
+# LICENSE
+> Copyright (c) 2018-2019 [Johannes Krottmayer](mailto:krjdev@gmail.com)  
+>  
+> Permission to use, copy, modify, and/or distribute this software for any  
+> purpose with or without fee is hereby granted, provided that the above  
+> copyright notice and this permission notice appear in all copies.  
+>  
+> THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  
+> WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF  
+> MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR  
+> ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES  
+> WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN  
+> ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF  
+> OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
