@@ -17,17 +17,11 @@
  */
  
 #ifdef __unix__
-#include <fcntl.h>
-#include <errno.h>
-#include <unistd.h>
-#include <termios.h>
-#include <sys/ioctl.h>
+#include "unix/uart.h"
 #elif _WIN32
 #include <Windows.h>
-#endif /* __unix__ or _WIN32 */
-
-#include "uart.h"
-#include "error.h"
+#include "win32/uart.h"
+#endif
 
 static int is_baud_valid(int value)
 {
@@ -413,4 +407,114 @@ int uart_flow_get(uart_t *uart)
     }
     
     return uart->flow_ctrl;
+}
+
+uart_t *libUART_open(const char *dev, int baud, const char *opt)
+{
+    
+}
+
+void libUART_close(uart_t *uart)
+{
+    
+}
+
+int libUART_send(uart_t *uart, char *send_buf, int len)
+{
+    
+}
+
+int libUART_recv(uart_t *uart, char *recv_buf, int len)
+{
+    
+}
+
+void libUART_set_baud(uart_t *uart, int baud)
+{
+    
+}
+
+int libUART_get_baud(uart_t *uart)
+{
+    
+}
+
+int libUART_get_fd(uart_t *uart)
+{
+    
+}
+
+char *libUART_get_dev(uart_t *uart)
+{
+    
+}
+
+void libUART_set_databits(uart_t *uart, int data_bits)
+{
+    
+}
+
+int libUART_get_databits(uart_t *uart)
+{
+    
+}
+
+void libUART_set_parity(uart_t *uart, int parity)
+{
+    
+}
+
+int libUART_get_parity(uart_t *uart)
+{
+    
+}
+
+void libUART_set_stopbits(uart_t *uart, int stop_bits)
+{
+    
+}
+
+int libUART_get_stopbits(uart_t *uart)
+{
+    
+}
+
+void libUART_set_flowctrl(uart_t *uart, int flow_ctrl)
+{
+    
+}
+
+int libUART_get_flowctrl(uart_t *uart)
+{
+    
+}
+
+void libUART_set_pin(uart_t *uart, int pin, int state)
+{
+    
+}
+
+int libUART_get_pin(uart_t *uart, int pin)
+{
+    
+}
+
+int libUART_get_bytes_available(uart_t *uart)
+{
+    
+}
+
+char *libUART_get_libname(void)
+{
+    return LIBUART_NAME;
+}
+
+char *libUART_get_libversion(void)
+{
+    return LIBUART_VERSION;
+}
+
+char *libUART_get_libcopyright(void)
+{
+    return LIBUART_COPYRIGHT;
 }
