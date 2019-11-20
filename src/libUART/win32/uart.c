@@ -1,13 +1,13 @@
 /**
  *
- * File Name: uart.c
- * Title    : UART library source
- * Project  : libuart
- * Author   : Copyright (C) 2018 Johannes Krottmayer <krjdev@gmail.com>
- * Created  : 2018-05-21
- * Modified : 2018-12-30
+ * File Name: win32/uart.c
+ * Title    : WIN32 UART
+ * Project  : libUART
+ * Author   : Copyright (C) 2018-2019 Johannes Krottmayer <krjdev@gmail.com>
+ * Created  : 2019-11-20
+ * Modified : 
  * Revised  : 
- * Version  : 0.2.1.0
+ * Version  : 0.1.0.0
  * License  : ISC (see file LICENSE.txt)
  *
  * NOTE: This code is currently below version 1.0, and therefore is considered
@@ -23,227 +23,6 @@
 
 #include "uart.h"
 #include "error.h"
-
-static int enum_contains(int enum_values[], int len, int value)
-{
-    int i;
-    
-    for (i = 0; i < len; i++)
-        if (enum_values[i] == value)
-            return 1;
-    
-    return 0;
-}
-
-static int is_baud_valid(int value)
-{
-    int E[] = {
-#ifdef __unix__
-        UART_BAUD_0,
-        UART_BAUD_50,
-        UART_BAUD_75,
-#endif
-        UART_BAUD_110,
-#ifdef __unix__
-        UART_BAUD_134,
-        UART_BAUD_150,
-        UART_BAUD_200,
-#endif
-        UART_BAUD_300,
-        UART_BAUD_600,
-        UART_BAUD_1200,
-#ifdef __unix__
-        UART_BAUD_1800,
-#endif
-        UART_BAUD_2400,
-        UART_BAUD_4800,
-        UART_BAUD_9600,
-#ifdef _WIN32
-        UART_BAUD_14400,
-#endif
-        UART_BAUD_19200,
-        UART_BAUD_38400,
-        UART_BAUD_57600,
-        UART_BAUD_115200,
-#ifdef _WIN32
-        UART_BAUD_128000,
-        UART_BAUD_256000
-#elif __unix__
-        UART_BAUD_230400,
-        UART_BAUD_460800,
-        UART_BAUD_500000,
-        UART_BAUD_576000,
-        UART_BAUD_921600,
-        UART_BAUD_1000000,
-        UART_BAUD_1152000,
-        UART_BAUD_1500000,
-        UART_BAUD_2000000,
-        UART_BAUD_2500000,
-        UART_BAUD_3000000,
-        UART_BAUD_3500000,
-        UART_BAUD_4000000
-#endif /* __unix__ or _WIN32 */
-    };
-    
-    if (enum_contains(E, sizeof(E)/sizeof(E[0]), value))
-        return 1;
-    
-    return 0;
-}
-
-static int is_databits_valid(int value)
-{
-    if ((value > 4) && (value < 9))
-        return 1;
-    
-    return 0;
-}
-
-static int is_parity_valid(int value)
-{
-    int ret = 0;
-    
-    switch (value) {
-    case UART_PARITY_NO:
-        ret = 1;
-        break;
-    case UART_PARITY_ODD:
-        ret = 1;
-        break;
-    case UART_PARITY_EVEN:
-        ret = 1;
-        break;
-    default:
-        break;
-    }
-    
-    return ret;
-}
-
-static int is_stopbits_valid(int value)
-{
-    if ((value > 0) && (value < 3))
-        return 1;
-    
-    return 0;
-}
-
-static int is_flow_valid(int value)
-{
-    int ret = 0;
-    
-    switch (value) {
-    case UART_FLOW_NO:
-        ret = 1;
-        break;
-    case UART_FLOW_SOFTWARE:
-        ret = 1;
-        break;
-    case UART_FLOW_HARDWARE:
-        ret = 1;
-        break;
-    default:
-        break;
-    }
-    
-    return ret;
-}
-
-static int parse_option(uart_t *uart, const char *opt)
-{
-    int i = 0;
-    
-    if (!uart) {
-        printerr_uart_type_invalid();
-        return -1;
-    }
-    
-    if (!opt) {
-        printerr_string_null();
-        return -1;
-    }
-    
-    while (opt[i] != '\0') {
-        /* parse data bits */
-        switch (opt[i]) {
-        case '5':
-            uart->data_bits = 5;
-            break;
-        case '6':
-            uart->data_bits = 6;
-            break;
-        case '7':
-            uart->data_bits = 7;
-            break;
-        case '8':
-            uart->data_bits = 8;
-            break;
-        default:
-            printerr_uart_opt_invalid("data bits");
-            return -1;
-        }
-        
-        i++;
-        
-        /* parse parity */
-        switch (opt[i]) {
-        case 'N':
-            uart->parity = UART_PARITY_NO;
-            break;
-        case 'O':
-            uart->parity = UART_PARITY_ODD;
-            break;
-        case 'E':
-            uart->parity = UART_PARITY_EVEN;
-            break;
-        default:
-            printerr_uart_opt_invalid("parity");
-            return -1;
-        }
-        
-        i++;
-        
-        /* parse stop bits */
-        switch (opt[i]) {
-        case '1':
-            uart->stop_bits = 1;
-            break;
-        case '2':
-            uart->stop_bits = 2;
-            break;
-        default:
-            printerr_uart_opt_invalid("stop bits");
-            return -1;
-        }
-        
-        i++;
-        
-        /* parse flow control */
-        switch (opt[i]) {
-        case 'N':
-            uart->flow_ctrl = UART_FLOW_NO;
-            break;
-        case 'S':
-            uart->flow_ctrl = UART_FLOW_SOFTWARE;
-            break;
-        case 'H':
-            uart->flow_ctrl = UART_FLOW_HARDWARE;
-            break;
-        default:
-            printerr_uart_opt_invalid("flow control");
-            return -1;
-        }
-        
-        i++;
-        
-        if (opt[i] != '\0') {
-            printerr_uart_opt_invalid(NULL);
-            return -1;
-        }
-    }
-    
-    return 0;
-}
 
 static int init_baud(uart_t *uart)
 {
@@ -394,196 +173,88 @@ static int init_parity(uart_t *uart)
 
 static int init_stopbits(uart_t *uart)
 {
-    int ret;
-#ifdef __unix__
-    struct termios options;
-#elif _WIN32
+    BOOL ret;
     DCB dcb = { 0 };
     dcb.DCBlength = sizeof(dcb);
-    DWORD dwerror;
-    LPVOID lpmessage;
-#endif /* __unix__ or _WIN32 */
     
-#ifdef __unix__
-    ret = tcgetattr(uart->fd, &options);
-    
-    if (ret == -1) {
-            printerr_uart_termios(strerror(errno));
-            return -1;
-    }
-#elif _WIN32
     ret = GetCommState(uart->h, &dcb);
     
     if (!ret) {
-        dwerror = GetLastError();
-        FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-                  FORMAT_MESSAGE_IGNORE_INSERTS, 
-                  NULL, 
-                  dwerror, 
-                  MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), 
-                  (LPTSTR) &lpmessage, 
-                  0, 
-                  NULL);
-        printerr_uart_comm((const char *) lpmessage);
-        LocalFree(lpmessage);
+        error("GetCommState() failed", 1);
         return -1;
     }
-#endif /* __unix__ or _WIN32 */
     
     switch (uart->stop_bits) {
     case 1:
-#ifdef __unix__
-        options.c_cflag &= ~CSTOPB;
-#elif _WIN32
         dcb.StopBits = ONESTOPBIT;
-#endif /* __unix__ or _WIN32 */
         break;
     case 2:
-#ifdef __unix__
-        options.c_cflag |= CSTOPB;
-#elif _WIN32
         dcb.StopBits = TWOSTOPBITS;
-#endif /* __unix__ or _WIN32 */
         break;
     default:
-        break;
+        error("Invalid Stop Bits", 0);
+        return -1;
     }
     
-#ifdef __unix__
-    ret = tcsetattr(uart->fd, TCSANOW, &options);
-    
-    if (ret == -1) {
-            printerr_uart_termios(strerror(errno));
-            return -1;
-    }
-#elif _WIN32
     ret = SetCommState(uart->h, &dcb);
     
     if (!ret) {
-        dwerror = GetLastError();
-        FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-                  FORMAT_MESSAGE_IGNORE_INSERTS, 
-                  NULL, 
-                  dwerror, 
-                  MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), 
-                  (LPTSTR) &lpmessage, 
-                  0, 
-                  NULL);
-        printerr_uart_comm((const char *) lpmessage);
-        LocalFree(lpmessage);
+        error("SetCommState() failed", 1);
         return -1;
     }
-#endif /* __unix__ or _WIN32 */
+    
     return 0;
 }
 
 static int init_flow(uart_t *uart)
 {
-    int ret;
-#ifdef __unix__
-    struct termios options;
-#elif _WIN32
+    BOOL ret;
     DCB dcb = { 0 };
     dcb.DCBlength = sizeof(dcb);
-    DWORD dwerror;
-    LPVOID lpmessage;
-#endif /* __unix__ or _WIN32 */
     
-#ifdef __unix__
-    ret = tcgetattr(uart->fd, &options);
-    
-    if (ret == -1) {
-            printerr_uart_termios(strerror(errno));
-            return -1;
-    }
-#elif _WIN32
     ret =  GetCommState(uart->h, &dcb);
     
     if (!ret) {
-        dwerror = GetLastError();
-        FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-                  FORMAT_MESSAGE_IGNORE_INSERTS, 
-                  NULL, 
-                  dwerror, 
-                  MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), 
-                  (LPTSTR) &lpmessage, 
-                  0, 
-                  NULL);
-        printerr_uart_comm((const char *) lpmessage);
-        LocalFree(lpmessage);
+        error("GetCommState() failed", 1);
         return -1;
     }
-#endif /* __unix__ or _WIN32 */
     
     switch (uart->flow_ctrl) {
     case UART_FLOW_NO:
-#ifdef __unix__
-        options.c_cflag &= ~CRTSCTS;
-        options.c_iflag &= ~(IXON | IXOFF | IXANY);
-#elif _WIN32
         dcb.fOutxCtsFlow = FALSE,
         dcb.fOutxDsrFlow = FALSE,
         dcb.fDtrControl = DTR_CONTROL_DISABLE;
         dcb.fRtsControl = RTS_CONTROL_DISABLE;
         dcb.fOutX = FALSE;
         dcb.fInX = FALSE;
-#endif /* __unix__ or _WIN32 */
         break;
     case UART_FLOW_SOFTWARE:
-#ifdef __unix__
-        options.c_cflag &= ~CRTSCTS;
-        options.c_iflag |= (IXON | IXOFF | IXANY);
-#elif _WIN32
         dcb.fOutxCtsFlow = FALSE,
         dcb.fOutxDsrFlow = FALSE,
         dcb.fDtrControl = DTR_CONTROL_DISABLE;
         dcb.fRtsControl = RTS_CONTROL_DISABLE;
         dcb.fOutX = TRUE;
         dcb.fInX = TRUE;
-#endif /* __unix__ or _WIN32 */
         break;
     case UART_FLOW_HARDWARE:
-#ifdef __unix__
-        options.c_cflag |= CRTSCTS;
-        options.c_iflag &= ~(IXON | IXOFF | IXANY);
-#elif _WIN32
         dcb.fOutxCtsFlow = TRUE,
         dcb.fOutxDsrFlow = TRUE,
         dcb.fDtrControl = DTR_CONTROL_ENABLE;
         dcb.fRtsControl = RTS_CONTROL_ENABLE;
         dcb.fOutX = FALSE;
         dcb.fInX = FALSE;
-#endif /* __unix__ or _WIN32 */
         break;
     default:
-        break;
+        error("Invalid Flow Control", 0);
+        return -1;
     }
     
-#ifdef __unix__
-    ret = tcsetattr(uart->fd, TCSANOW, &options);
-    
-    if (ret == -1) {
-            printerr_uart_termios(strerror(errno));
-            return -1;
-    }
-#elif _WIN32
     ret =  SetCommState(uart->h, &dcb);
     
     if (!ret) {
-        dwerror = GetLastError();
-        FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-                  FORMAT_MESSAGE_IGNORE_INSERTS, 
-                  NULL, 
-                  dwerror, 
-                  MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), 
-                  (LPTSTR) &lpmessage, 
-                  0, 
-                  NULL);
-        printerr_uart_comm((const char *) lpmessage);
-        LocalFree(lpmessage);
+        error("SetCommState() failed", 1);
         return -1;
     }
-#endif /* __unix__ or _WIN32 */
     
     return 0;
 }
@@ -591,24 +262,11 @@ static int init_flow(uart_t *uart)
 static int init(uart_t *uart)
 {
     int ret;
-#ifdef __unix__
-    struct termios options;
-#endif /* __unix__ */
     
     if (!uart) {
         printerr_uart_type_invalid();
         return -1;
     }
-    
-#ifdef __unix__
-    /* set non-blocking mode*/
-    ret = fcntl(uart->fd, F_SETFL, FNDELAY);
-    
-    if (ret == -1) {
-        printerr_fcntl(strerror(errno));
-        return -1;
-    }
-#endif /* __unix__ */
     
     /* set baud rate */
     ret = init_baud(uart);
@@ -640,26 +298,6 @@ static int init(uart_t *uart)
     if (ret == -1)
         return -1;
     
-#ifdef __unix__
-    ret = tcgetattr(uart->fd, &options);
-    
-    if (ret == -1) {
-            printerr_uart_termios(strerror(errno));
-            return -1;
-    }
-    
-    /* set raw input mode */
-    options.c_lflag &= ~(ICANON | ECHO | ECHOE | ISIG);
-    
-    /* enable receiver and set local mode */
-    options.c_cflag |= (CLOCAL | CREAD);
-    ret = tcsetattr(uart->fd, TCSANOW, &options);
-    
-    if (ret == -1) {
-            printerr_uart_termios(strerror(errno));
-            return -1;
-    }
-#endif /* __unix__ */
     return 0;
 }
 
@@ -1121,17 +759,6 @@ int uart_baud_get(uart_t *uart)
     return uart->baud; 
 }
 
-#ifdef __unix__
-int uart_fd_get(uart_t *uart)
-{
-    if (!uart) {
-        printerr_uart_type_invalid();
-        return -1;
-    }
-    
-    return uart->fd;
-}
-#elif _WIN32
 HANDLE uart_handle_get(uart_t *uart)
 {
     if (!uart) {
@@ -1141,7 +768,6 @@ HANDLE uart_handle_get(uart_t *uart)
     
     return uart->h;
 }
-#endif /* __unix__ or _WIN32 */
 
 char *uart_dev_get(uart_t *uart)
 {
