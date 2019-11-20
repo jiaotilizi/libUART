@@ -7,9 +7,10 @@ TARGET 	= libUART.so.0.3
 CFLAGS 	= -Wall -fPIC
 LDFLAGS = -shared -Wl,-soname,$(TARGET)
 
-SRC += error.c
-SRC += error_uart.c
+SRC += unix/error.c
+SRC += unix/uart.c
 SRC += uart.c
+SRC += util.c
 
 OBJ = $(SRC:.c=.o)
 
