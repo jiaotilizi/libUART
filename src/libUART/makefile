@@ -26,12 +26,12 @@ debug: main
 
 main: $(OBJ)
 	$(CC) -o $(TARGET) $(LDFLAGS) $(OBJ)
+	$(LN) $(TARGET) libUART.so
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
 install:
-	$(LN) $(TARGET) libUART.so
 	$(INSTALL) -d $(DESTDIR)$(PREFIX)/lib64/
 	$(INSTALL) -m 644 libUART.so $(DESTDIR)$(PREFIX)/lib64/
 	$(INSTALL) -m 644 $(TARGET) $(DESTDIR)$(PREFIX)/lib64/
