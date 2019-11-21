@@ -18,13 +18,13 @@
     <ClCompile Include="src\libUART\win32\error.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\libUART\win32\uart.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\libUART\uart.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\libUART\util.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\libUART\win32\win32_uart.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -110,7 +110,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\libUART\win32\error.c" />
-    <ClCompile Include="src\libUART\win32\uart.c" />
+    <ClCompile Include="src\libUART\win32\win32_uart.c" />
     <ClCompile Include="src\libUART\uart.c" />
     <ClCompile Include="src\libUART\util.c" />
   </ItemGroup>

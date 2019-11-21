@@ -33,7 +33,7 @@ uart_t *libUART_open(const char *dev, int baud, const char *opt)
 
 void libUART_close(uart_t *uart)
 {
-    return uart_close(uart);
+    uart_close(uart);
 }
 
 int libUART_send(uart_t *uart, char *send_buf, int len)

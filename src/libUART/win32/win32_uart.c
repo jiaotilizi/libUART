@@ -450,9 +450,9 @@ struct _uart *uart_open(const char *dev, int baud, const char *opt)
     if (ret == -1)
         return NULL;
     
-    if (!is_baud_valid(baud)) {
+    if (!uart_baud_valid(baud)) {
         error("invalid Baud Rate", 0);
-        CloseHandle(fd);
+        CloseHandle(h);
         free(p);
         return NULL;
     }
@@ -461,7 +461,7 @@ struct _uart *uart_open(const char *dev, int baud, const char *opt)
     ret = uart_init(p);
     
     if (ret == -1) {
-        CloseHandle(fd);
+        CloseHandle(h);
         free(p);
         return NULL;
     }
@@ -544,6 +544,7 @@ int uart_set_pin(struct _uart *uart, int pin, int state)
         break;
     default:
         error("invalid pin", 0);
+        return -1;
     }
     
     ret = EscapeCommFunction(uart->h, dwfunc);
@@ -552,6 +553,8 @@ int uart_set_pin(struct _uart *uart, int pin, int state)
         error("EscapeCommFunction() failed", 1);
         return -1;
     }
+
+    return 0;
 }
 
 int uart_get_pin(struct _uart *uart, int pin, int *state)
@@ -603,6 +606,7 @@ int uart_get_bytes(struct _uart *uart, int *bytes)
 {
     int ret = 0;
     COMSTAT comst;
+    DWORD dwerror;
     
     ret = ClearCommError(uart->h, &dwerror, &comst);
     
@@ -614,5 +618,5 @@ int uart_get_bytes(struct _uart *uart, int *bytes)
     ret = (int) comst.cbInQue;
     
     (*bytes) = ret;
-    return o;
+    return 0;
 }
