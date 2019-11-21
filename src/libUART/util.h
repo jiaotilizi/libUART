@@ -19,6 +19,6 @@
 #ifndef LIBUART_UTIL_H
 #define LIBUART_UTIL_H
 
-extern int enum_contains(int enum_values[], int len, int value)
+extern int enum_contains(int enum_values[], int len, int value);
 
 #endif
