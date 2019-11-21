@@ -19,7 +19,7 @@
 #ifndef LIBUART_UNIX_ERROR_H
 #define LIBUART_UNIX_ERROR_H
 
-extern void error_enable(int enable);
-extern void error(const char *err_msg, int detail);
+void error_enable(int enable);
+void error(const char *err_msg, int detail);
 
 #endif
