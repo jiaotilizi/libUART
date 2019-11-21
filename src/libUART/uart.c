@@ -7,7 +7,7 @@
  * Created  : 2018-05-21
  * Modified : 2019-11-21
  * Revised  : 
- * Version  : 0.3.0.0
+ * Version  : 0.4.0.0
  * License  : ISC (see file LICENSE.txt)
  *
  * NOTE: This code is currently below version 1.0, and therefore is considered
@@ -58,11 +58,19 @@ int libUART_get_baud(uart_t *uart, int *baud)
     return 0;
 }
 
+#ifdef __unix__
 int libUART_get_fd(uart_t *uart, int *fd)
 {
     (*fd) = uart->fd;
     return 0;
 }
+#elif _WIN32
+int libUART_get_handle(uart_t *uart, HANDLE *h)
+{
+    (*h) = uart->h;
+    return 0;
+}
+#endif
 
 int libUART_get_dev(uart_t *uart, char **dev)
 {
