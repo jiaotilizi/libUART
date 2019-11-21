@@ -33,9 +33,9 @@ extern "C"
 #endif
 #endif
 
-struct uart;
+struct _uart;
 
-typedef struct uart uart_t;
+typedef struct _uart uart_t;
 
 enum e_baud {
 #ifdef __unix__
