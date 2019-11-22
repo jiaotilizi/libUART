@@ -72,7 +72,6 @@ Arg | Description
 *recv\_buf* | The pointer where the received data is stored
 *len* | The length of the data in bytes
 
-
 #### Return:
 On success, the number of received bytes will be returned. On error, *-1* will be returned.
 
@@ -88,6 +87,9 @@ Arg | Description
 *uart* | The *uart_t* object
 *baud* | The baud rate (Use the *enums* in the header file, other values where not accepted)
 
+#### Return:
+On success, *0* will be returned. On error, *-1* will be returned.
+
 ```c
 libUART_get_baud(uart_t *uart, int *baud);
 ```
@@ -98,9 +100,11 @@ Get the current baud rate from the UART port.
 Arg | Description
 --- | -----------
 *uart* | The *uart_t* object
+*baud* | The returned Baud Rate
+
 
 #### Return:
-On success, the baud rate will be returned. On error, -1 will be returned.
+On success, *0* will be returned. On error, *-1* will be returned.
 
 ```c
 int libUART_get_fd(uart_t *uart, int *fd);
@@ -112,9 +116,10 @@ Get the file descriptor from the UART port. (Linux/UNIX only)
 Arg | Description
 --- | -----------
 *uart* | The *uart_t* object
+*fd* | The returned File descriptor
 
 #### Return:
-On success, the file descriptor will be returned. On error, -1 will be returned.
+On success, *0* will be returned. On error, *-1* will be returned.
 
 ```c
 int libUART_get_handle(uart_t *uart, HANDLE *handle);
@@ -125,9 +130,10 @@ Get the handle from the UART port. (Windows only)
 Arg | Description
 --- | -----------
 *uart* | The *uart_t* object
+*handle* | The returned HANDLE
 
 #### Return:
-On success, the handle will be returned. On error, -1 will be returned.
+On success, *0* will be returned. On error, *-1* will be returned.
 
 ```c
 int libUART_get_dev(uart_t *uart, char **dev);
@@ -139,9 +145,10 @@ Get the device of the from the UART port.
 Arg | Description
 --- | -----------
 *uart* | The *uart_t* object
+*dev* | The returned poniter to the device name.
 
 #### Return:
-On success, the device name will be returned. After usage the string must be freed. On error, a NULL pointer will be returned.
+On success, *0* will be returned. On error, *-1* will be returned.
 
 ```c
 int libUART_set_databits(uart_t *uart, int data_bits);
@@ -155,6 +162,9 @@ Arg | Description
 *uart* | The *uart_t* object
 *data\_bits* | The number of data bits (valid values are **5**, **6**, **7** ot **8**)
 
+#### Return:
+On success, *0* will be returned. On error, *-1* will be returned.
+
 ```c
 int libUART_get_databits(uart_t *uart, int *data_bits);
 ```
@@ -165,9 +175,10 @@ Get the data bits from the uart port.
 Arg | Description
 --- | -----------
 *uart* | The *uart_t* object
+*data_bits* | The returned Data Bits
 
 #### Return:
-On success, the number of data bits will be returned. On error, -1 will be returned.
+On success, *0* will be returned. On error, *-1* will be returned.
 
 ```c
 int libUART_set_parity(uart_t *uart, int parity);
@@ -181,6 +192,9 @@ Arg | Description
 *uart* | The *uart_t* object
 *parity* | The parity (valid values are **UART\_PARITY\_NO**, **UART\_PARITY\_ODD** or **UART\_PARITY\_EVEN**)
 
+#### Return:
+On success, *0* will be returned. On error, *-1* will be returned.
+
 ```c
 int libUART_get_parity(uart_t *uart, int *parity);
 ```
@@ -191,9 +205,10 @@ Get the parity from the UART port.
 Arg | Description
 --- | -----------
 *uart* | The *uart_t* object
+*uart* | The returned Parity
 
 #### Return:
-On success, the parity will be returned. On error, -1 will be returned.
+On success, *0* will be returned. On error, *-1* will be returned.
 
 ```c
 int libUART_set_stopbits(uart_t *uart, int stop_bits);
@@ -207,6 +222,10 @@ Arg | Description
 *uart* | The *uart_t* object
 *stop\_bits* | The number of stop bits (valid values are **1** or **2**)
 
+#### Return:
+On success, *0* will be returned. On error, *-1* will be returned.
+
+
 ```c
 int libUART_get_stopbits(uart_t *uart, int *stop_bits);
 ```
@@ -217,9 +236,10 @@ Get the stop bits from the UART port.
 Arg | Description
 --- | -----------
 *uart* | The *uart_t* object
+*stop_bits* | The returned Stop Bits
 
 #### Return:
-On success, the number of stop bits will be returned. On error, -1 will be returned.
+On success, *0* will be returned. On error, *-1* will be returned.
 
 ```c
 int libUART_set_flowctrl(uart_t *uart, int flow_ctrl);
@@ -234,6 +254,9 @@ Arg | Description
 *uart* | The *uart_t* object
 *flow\_ctrl* | The flow control (valid values are **UART\_FLOW\_NO**, **UART\_FLOW\_SOFTWARE** or **UART\_FLOW\_HARDWARE**)
 
+#### Return:
+On success, *0* will be returned. On error, *-1* will be returned.
+
 ```c
 int libUART_get_flowctrl(uart_t *uart, int *flow_ctrl);
 ```
@@ -244,9 +267,10 @@ Get the flow control from the UART port.
 Arg | Description
 --- | -----------
 *uart* | The *uart_t* object
+*flow_ctrl* | The returned Flow Control
 
 #### Return:
-On success, the flow control will be returned. On error, -1 will be returned.
+On success, *0* will be returned. On error, *-1* will be returned.
 
 ```c
 int libUART_set_pin(uart_t *uart, int pin, int state);
@@ -271,6 +295,9 @@ UART\_PIN\_DCD | Data Carrier Detect
 UART\_PIN\_DTR | Data Terminal Ready
 UART\_PIN\_RI | Ring Indicator
 
+#### Return:
+On success, *0* will be returned. On error, *-1* will be returned.
+
 ```c
 int libUART_get_pin(uart_t *uart, int pin, int *state);
 ```
@@ -282,9 +309,10 @@ Arg | Description
 --- | -----------
 *uart* | The *uart_t* object
 *pin* | The control pin of the UART
+*state* | The returned State of the pin
 
 #### Return:
-On success, the state of the pin will be returned. On error, -1 will be returned.
+On success, *0* will be returned. On error, *-1* will be returned.
 
 ```c
 int libUART_get_bytes_available(uart_t *uart, int *num);
@@ -296,9 +324,10 @@ Get the current available bytes in the receive buffer.
 Arg | Description
 --- | -----------
 *uart* | The *uart_t* object
+*num* | The returned available bytes
 
-#### Return:
-On success, the number of bytes in the receive buffer will be returned. On error, -1 will be returned.
+### Return:
+On success, *0* will be returned. On error, *-1* will be returned.
 
 ```c
 char *libUART_get_libname(void);
