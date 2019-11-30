@@ -7,7 +7,7 @@
  * Created  : 2019-11-21
  * Modified : 2019-11-30
  * Revised  : 
- * Version  : 0.2.0.0
+ * Version  : 0.2.1.0
  * License  : ISC (see file LICENSE.txt)
  *
  * NOTE: This code is currently below version 1.0, and therefore is considered
@@ -807,6 +807,9 @@ int uart_init(struct _uart *uart)
     
     /* enable receiver and set local mode */
     options.c_cflag |= (CLOCAL | CREAD);
+    
+    /* set raw output */
+    options.c_oflag &= ~OPOST;
     ret = tcsetattr(uart->fd, TCSANOW, &options);
     
     if (ret == -1) {
