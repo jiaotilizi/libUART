@@ -51,7 +51,7 @@ void error(const char *err_msg, int detail)
                       (LPTSTR) &lpvError, 
                       0, 
                       NULL);
-        fprintf(stderr, "%s (%s)\r\n", err_msg, lpvError);
+        fprintf(stderr, "%s (%s)\r\n", err_msg, (char *) lpvError);
         LocalFree(lpvError);
     } else
         fprintf(stderr, "%s\r\n", err_msg);

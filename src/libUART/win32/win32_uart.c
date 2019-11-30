@@ -329,7 +329,7 @@ int uart_open(struct _uart *uart)
     int ret;
     HANDLE h;
     
-    h = CreateFile((LPCTSTR) dev,
+    h = CreateFile((LPCTSTR) uart->dev,
                    GENERIC_READ | GENERIC_WRITE,
                    0,
                    NULL,
@@ -343,7 +343,7 @@ int uart_open(struct _uart *uart)
     }
     
     uart->h = h;
-    ret = uart_init(p);
+    ret = uart_init(uart);
     
     if (ret == -1) {
         CloseHandle(h);
@@ -391,7 +391,6 @@ int uart_recv(struct _uart *uart, char *recv_buf, int len)
 {
     int ret = 0;
     DWORD dwbytesread = (DWORD) len;
-    DWORD dwerror;
     
     ret = ReadFile(uart->h, 
                    (LPVOID) recv_buf, 
