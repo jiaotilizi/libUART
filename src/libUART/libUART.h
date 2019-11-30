@@ -5,9 +5,9 @@
  * Project  : libUART
  * Author   : Copyright (C) 2018-1019 Johannes Krottmayer <krjdev@gmail.com>
  * Created  : 2018-05-21
- * Modified : 2019-11-20
+ * Modified : 2019-11-30
  * Revised  : 
- * Version  : 0.3.0.0
+ * Version  : 0.4.0.0
  * License  : ISC (see file LICENSE.txt)
  *
  * NOTE: This code is currently below version 1.0, and therefore is considered
@@ -114,6 +114,8 @@ extern uart_t *libUART_open(const char *dev, int baud, const char *opt);
 extern void libUART_close(uart_t *uart);
 extern int libUART_send(uart_t *uart, char *send_buf, int len);
 extern int libUART_recv(uart_t *uart, char *recv_buf, int len);
+extern int libUART_puts(uart_t *uart, char *msg);
+extern int libUART_getc(uart_t *uart, char *c);
 extern int libUART_set_baud(uart_t *uart, int baud);
 extern int libUART_get_baud(uart_t *uart, int *baud);
 extern int libUART_get_fd(uart_t *uart, int *fd);
@@ -129,6 +131,7 @@ extern int libUART_get_flowctrl(uart_t *uart, int *flow_ctrl);
 extern int libUART_set_pin(uart_t *uart, int pin, int state);
 extern int libUART_get_pin(uart_t *uart, int pin, int *state);
 extern int libUART_get_bytes_available(uart_t *uart, int *num);
+extern void libUART_set_error(int enable);
 extern char *libUART_get_libname(void);
 extern char *libUART_get_libversion(void);
 extern char *libUART_get_libcopyright(void);
@@ -137,6 +140,8 @@ extern LIBUART_API uart_t *libUART_open(const char *dev, int baud, const char *o
 extern LIBUART_API void libUART_close(uart_t *uart);
 extern LIBUART_API int libUART_send(uart_t *uart, char *send_buf, int len);
 extern LIBUART_API int libUART_recv(uart_t *uart, char *recv_buf, int len);
+extern LIBUART_API int libUART_puts(uart_t *uart, char *msg);
+extern LIBUART_API int libUART_getc(uart_t *uart, char *c);
 extern LIBUART_API int libUART_set_baud(uart_t *uart, int baud);
 extern LIBUART_API int libUART_get_baud(uart_t *uart, int *baud);
 extern LIBUART_API int libUART_get_handle(uart_t *uart, HANDLE *handle);
@@ -152,6 +157,7 @@ extern LIBUART_API int libUART_get_flowctrl(uart_t *uart, int *flow_ctrl);
 extern LIBUART_API int libUART_set_pin(uart_t *uart, int pin, int state);
 extern LIBUART_API int libUART_get_pin(uart_t *uart, int pin, int *state);
 extern LIBUART_API int libUART_get_bytes_available(uart_t *uart, int *num);
+extern LIBUART_API void libUART_set_error(int enable);
 extern LIBUART_API char *libUART_get_libname(void);
 extern LIBUART_API char *libUART_get_libversion(void);
 extern LIBUART_API char *libUART_get_libcopyright(void);
