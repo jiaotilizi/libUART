@@ -5,7 +5,7 @@
  * Project  : libUART
  * Author   : Copyright (C) 2018-2019 Johannes Krottmayer <krjdev@gmail.com>
  * Created  : 2019-11-20
- * Modified : 
+ * Modified : 2019-11-30
  * Revised  : 
  * Version  : 0.1.0.0
  * License  : ISC (see file LICENSE.txt)
@@ -40,7 +40,7 @@ extern int uart_init_parity(struct _uart *uart);
 extern int uart_init_stopbits(struct _uart *uart);
 extern int uart_init_flow(struct _uart *uart);
 extern int uart_init(struct _uart *uart);
-extern struct _uart *uart_open(const char *dev, int baud, const char *opt);
+extern int uart_open(struct _uart *uart);
 extern void uart_close(struct _uart *uart);
 extern int uart_send(struct _uart *uart, char *send_buf, int len);
 extern int uart_recv(struct _uart *uart, char *recv_buf, int len);

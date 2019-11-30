@@ -5,9 +5,9 @@
  * Project  : libUART
  * Author   : Copyright (C) 2018-2019 Johannes Krottmayer <krjdev@gmail.com>
  * Created  : 2019-11-20
- * Modified : 
+ * Modified : 2019-11-30
  * Revised  : 
- * Version  : 0.1.0.0
+ * Version  : 0.2.0.0
  * License  : ISC (see file LICENSE.txt)
  *
  * NOTE: This code is currently below version 1.0, and therefore is considered
@@ -26,92 +26,6 @@
 
 #include "error.h"
 #include "uart.h"
-
-static int parse_option(struct _uart *uart, const char *opt)
-{
-    int i = 0;
-    
-    while (opt[i] != '\0') {
-        /* parse data bits */
-        switch (opt[i]) {
-        case '5':
-            uart->data_bits = 5;
-            break;
-        case '6':
-            uart->data_bits = 6;
-            break;
-        case '7':
-            uart->data_bits = 7;
-            break;
-        case '8':
-            uart->data_bits = 8;
-            break;
-        default:
-            error("invalid Data Bits", 0);
-            return -1;
-        }
-        
-        i++;
-        
-        /* parse parity */
-        switch (opt[i]) {
-        case 'N':
-            uart->parity = UART_PARITY_NO;
-            break;
-        case 'O':
-            uart->parity = UART_PARITY_ODD;
-            break;
-        case 'E':
-            uart->parity = UART_PARITY_EVEN;
-            break;
-        default:
-            error("invalid Parity", 0);
-            return -1;
-        }
-        
-        i++;
-        
-        /* parse stop bits */
-        switch (opt[i]) {
-        case '1':
-            uart->stop_bits = 1;
-            break;
-        case '2':
-            uart->stop_bits = 2;
-            break;
-        default:
-            error("invalid Stop Bits", 0);
-            return -1;
-        }
-        
-        i++;
-        
-        /* parse flow control */
-        switch (opt[i]) {
-        case 'N':
-            uart->flow_ctrl = UART_FLOW_NO;
-            break;
-        case 'S':
-            uart->flow_ctrl = UART_FLOW_SOFTWARE;
-            break;
-        case 'H':
-            uart->flow_ctrl = UART_FLOW_HARDWARE;
-            break;
-        default:
-            error("invalid Flow control", 0);
-            return -1;
-        }
-        
-        i++;
-        
-        if (opt[i] != '\0') {
-            error("invalid Options", 0);
-            return -1;
-        }
-    }
-    
-    return 0;
-}
 
 int uart_baud_valid(int value)
 {
@@ -410,26 +324,11 @@ int uart_init(struct _uart *uart)
     return 0;
 }
 
-struct _uart *uart_open(const char *dev, int baud, const char *opt)
+int uart_open(struct _uart *uart)
 {
     int ret;
     HANDLE h;
-    struct _uart *p;
     
-    p = (struct _uart *) malloc(sizeof(struct _uart));
-    
-    if (!p) {
-        error("malloc() failed", 1);
-        return NULL;
-    }
-    
-    if (strlen(dev) >= DEV_NAME_LEN) {
-        error("UART device name too long", 0);
-        free(p);
-        return NULL;
-    }
-    
-    strcpy(p->dev, dev);
     h = CreateFile((LPCTSTR) dev,
                    GENERIC_READ | GENERIC_WRITE,
                    0,
@@ -440,33 +339,18 @@ struct _uart *uart_open(const char *dev, int baud, const char *opt)
     
     if (h == INVALID_HANDLE_VALUE) {
         error("CreateFile() failed", 1);
-        free(p);
-        return NULL;
+        return -1;
     }
     
-    p->h = h;
-    ret = parse_option(p, opt);
-    
-    if (ret == -1)
-        return NULL;
-    
-    if (!uart_baud_valid(baud)) {
-        error("invalid Baud Rate", 0);
-        CloseHandle(h);
-        free(p);
-        return NULL;
-    }
-    
-    p->baud = baud;
+    uart->h = h;
     ret = uart_init(p);
     
     if (ret == -1) {
         CloseHandle(h);
-        free(p);
-        return NULL;
+        return -1;
     }
     
-    return p;
+    return 0;
 }
 
 void uart_close(struct _uart *uart)
