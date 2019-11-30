@@ -100,10 +100,10 @@ Get character from UART.
 Arg | Description
 --- | -----------
 *uart* | The *uart_t* object
-*c* | The retruned char
+*c* | The returned character
 
 #### Return:
-On success, the number of transmited bytes will be returned. On error, *-1* will be returned.
+On success, the number of received bytes will be returned. On error, *-1* will be returned.
 
 ```c
 int libUART_set_baud(uart_t *uart, int baud);
@@ -175,7 +175,7 @@ Get the device of the from the UART port.
 Arg | Description
 --- | -----------
 *uart* | The *uart_t* object
-*dev* | The returned poniter to the device name.
+*dev* | The returned pointer to the device name.
 
 #### Return:
 On success, *0* will be returned. On error, *-1* will be returned.
