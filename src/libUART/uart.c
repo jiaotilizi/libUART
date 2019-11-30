@@ -145,6 +145,8 @@ uart_t *libUART_open(const char *dev, int baud, const char *opt)
         free(p);
         return NULL;
     }
+
+    p->baud = baud;
     
     if (uart_open(p) == -1) {
         free(p);
