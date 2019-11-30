@@ -7,7 +7,7 @@
  * Created  : 2019-11-30
  * Modified : 
  * Revised  : 
- * Version  : 0.1.0.0
+ * Version  : 0.2.0.0
  * License  : ISC (see file LICENSE.txt)
  *
  * NOTE: This code is currently below version 1.0, and therefore is considered
@@ -21,13 +21,12 @@
 
 #ifdef __unix__
 #include <unistd.h>
-
 #define UART_DEV    "/dev/ttyUSB0"
 #elif _WIN32
 #include <Windows.h>
-
 #define UART_DEV    "\\\\.\\COM3"
 #endif
+
 #include <libUART.h>
 
 int main(int argc, char* argv[])
@@ -43,7 +42,13 @@ int main(int argc, char* argv[])
         return -1;
     
     printf("TX: %d byte(s)\n", libUART_puts(uart, "Hello World!"));
+    
+#ifdef __unix__
+    sleep(1);
+#elif _WIN32
     Sleep(1000);
+#endif
+    
     libUART_get_bytes_available(uart, &bytes);
     printf("RX: %d byte(s) available\n", bytes);
     buf = (char *) malloc(bytes + 1);

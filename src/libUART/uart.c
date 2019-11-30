@@ -7,7 +7,7 @@
  * Created  : 2018-05-21
  * Modified : 2019-11-30
  * Revised  : 
- * Version  : 0.5.0.0
+ * Version  : 0.5.0.1
  * License  : ISC (see file LICENSE.txt)
  *
  * NOTE: This code is currently below version 1.0, and therefore is considered
