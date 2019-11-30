@@ -76,6 +76,36 @@ Arg | Description
 On success, the number of received bytes will be returned. On error, *-1* will be returned.
 
 ```c
+int libUART_puts(uart_t *uart, char *msg);
+```
+
+Transmit string via UART.
+
+### Arguments:
+Arg | Description
+--- | -----------
+*uart* | The *uart_t* object
+*msg* | The string
+
+#### Return:
+On success, the number of transmited bytes will be returned. On error, *-1* will be returned.
+
+```c
+int libUART_getc(uart_t *uart, char *c);
+```
+
+Get character from UART.
+
+### Arguments:
+Arg | Description
+--- | -----------
+*uart* | The *uart_t* object
+*c* | The retruned char
+
+#### Return:
+On success, the number of transmited bytes will be returned. On error, *-1* will be returned.
+
+```c
 int libUART_set_baud(uart_t *uart, int baud);
 ```
 
@@ -328,6 +358,11 @@ Arg | Description
 
 ### Return:
 On success, *0* will be returned. On error, *-1* will be returned.
+
+```c
+void libUART_set_error(int enable);
+```
+Enable or disable error message output.
 
 ```c
 char *libUART_get_libname(void);
