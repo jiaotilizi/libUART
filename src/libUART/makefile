@@ -1,14 +1,14 @@
 RM 	= rm -rf
-LN	= ln -rs
+LN	= ln -frs
 CC 	= gcc
 INSTALL	= install
 
-TARGET 	= libUART.so.0.3
+TARGET 	= libUART.so.0.4
 CFLAGS 	= -Wall -fPIC
 LDFLAGS = -shared -Wl,-soname,$(TARGET)
 
 SRC += unix/error.c
-SRC += unix/uart.c
+SRC += unix/unix_uart.c
 SRC += uart.c
 SRC += util.c
 
