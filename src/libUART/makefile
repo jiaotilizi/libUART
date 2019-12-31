@@ -3,7 +3,8 @@ LN	= ln -frs
 CC 	= gcc
 INSTALL	= install
 
-TARGET 	= libUART.so.0.4
+NAME	= libUART
+TARGET 	= $(NAME).so.0.4
 CFLAGS 	= -Wall -fPIC
 LDFLAGS = -shared -Wl,-soname,$(TARGET)
 
@@ -26,17 +27,18 @@ debug: main
 
 main: $(OBJ)
 	$(CC) -o $(TARGET) $(LDFLAGS) $(OBJ)
-	$(LN) $(TARGET) libUART.so
+	$(LN) $(TARGET) $(NAME).so.0
+	$(LN) $(NAME).so.0 $(NAME).so
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
 install:
 	$(INSTALL) -d $(DESTDIR)$(PREFIX)/lib64/
-	$(INSTALL) -m 644 libUART.so $(DESTDIR)$(PREFIX)/lib64/
+	$(INSTALL) -m 644 $(NAME).so $(DESTDIR)$(PREFIX)/lib64/
 	$(INSTALL) -m 644 $(TARGET) $(DESTDIR)$(PREFIX)/lib64/
 	$(INSTALL) -d $(DESTDIR)$(PREFIX)/include/
-	$(INSTALL) -m 644 libUART.h $(DESTDIR)$(PREFIX)/include/
+	$(INSTALL) -m 644 $(NAME).h $(DESTDIR)$(PREFIX)/include/
 
 .PHONY: clean
 clean:
