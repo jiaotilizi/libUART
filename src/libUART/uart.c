@@ -5,9 +5,9 @@
  * Project  : libUART
  * Author   : Copyright (C) 2018-1019 Johannes Krottmayer <krjdev@gmail.com>
  * Created  : 2018-05-21
- * Modified : 2019-11-30
+ * Modified : 2019-12-31
  * Revised  : 
- * Version  : 0.5.0.1
+ * Version  : 0.5.1.0
  * License  : ISC (see file LICENSE.txt)
  *
  * NOTE: This code is currently below version 1.0, and therefore is considered
@@ -171,11 +171,15 @@ int libUART_send(uart_t *uart, char *send_buf, int len)
         return -1;
     }
     
-    if (!send_buf)
+    if (!send_buf) {
+        error("invalid send buffer", 0);
         return -1;
+    }
     
-    if (len < 1)
+    if (len < 1) {
+        error("invalid send buffer length", 0);
         return -1;
+    }
     
     return uart_send(uart, send_buf, len);
 }
@@ -187,11 +191,15 @@ int libUART_recv(uart_t *uart, char *recv_buf, int len)
         return -1;
     }
     
-    if (!recv_buf)
+    if (!recv_buf) {
+        error("invalid receive buffer", 0);
         return -1;
+    }
     
-    if (len < 1)
+    if (len < 1) {
+        error("invalid receive buffer length", 0);
         return -1;
+    }
     
     return uart_recv(uart, recv_buf, len);
 }
@@ -214,8 +222,10 @@ int libUART_puts(uart_t *uart, char *msg)
         return -1;
     }
     
-    if (!msg)
+    if (!msg) {
+        error("invalid <char> pointer", 0);
         return -1;
+    }
     
     return uart_send(uart, msg, strlen(msg));
 }
@@ -230,8 +240,10 @@ int libUART_getc(uart_t *uart, char *c)
         return -1;
     }
     
-    if (!c)
+    if (!c) {
+        error("invalid <char> pointer", 0);
         return -1;
+    }
     
     ret = uart_recv(uart, &buf[0], 1);
     (*c) = buf[0];
@@ -245,8 +257,10 @@ int libUART_get_baud(uart_t *uart, int *baud)
         return -1;
     }
     
-    if (!baud)
+    if (!baud) {
+        error("invalid <int> pointer", 0);
         return -1;
+    }
     
     (*baud) = uart->baud;
     return 0;
@@ -260,8 +274,10 @@ int libUART_get_fd(uart_t *uart, int *fd)
         return -1;
     }
     
-    if (!fd)
+    if (!fd) {
+        error("invalid <int> pointer", 0);
         return -1;
+    }
     
     (*fd) = uart->fd;
     return 0;
@@ -274,8 +290,10 @@ int libUART_get_handle(uart_t *uart, HANDLE *h)
         return -1;
     }
     
-    if (!h)
+    if (!h) {
+        error("invalid <HANDLE> pointer", 0);
         return -1;
+    }
     
     (*h) = uart->h;
     return 0;
@@ -289,8 +307,10 @@ int libUART_get_dev(uart_t *uart, char **dev)
         return -1;
     }
     
-    if (!dev)
+    if (!dev) {
+        error("invalid <char> pointer to pointer", 0);
         return -1;
+    }
     
     (*dev) = uart->dev;
     return 0;
@@ -314,8 +334,10 @@ int libUART_get_databits(uart_t *uart, int *data_bits)
         return -1;
     }
     
-    if (!data_bits)
+    if (!data_bits) {
+        error("invalid <int> pointer", 0);
         return -1;
+    }
     
     (*data_bits) = uart->data_bits;
     return 0;
@@ -339,8 +361,10 @@ int libUART_get_parity(uart_t *uart, int *parity)
         return -1;
     }
     
-    if (!parity)
+    if (!parity) {
+        error("invalid <int> pointer", 0);
         return -1;
+    }
     
     (*parity) = uart->parity;
     return 0;
@@ -364,8 +388,10 @@ int libUART_get_stopbits(uart_t *uart, int *stop_bits)
         return -1;
     }
     
-    if (!stop_bits)
+    if (!stop_bits) {
+        error("invalid <int> pointer", 0);
         return -1;
+    }
     
     (*stop_bits) = uart->stop_bits;
     return 0;
@@ -389,8 +415,10 @@ int libUART_get_flowctrl(uart_t *uart, int *flow_ctrl)
         return -1;
     }
     
-    if (!flow_ctrl)
+    if (!flow_ctrl) {
+        error("invalid <int> pointer", 0);
         return -1;
+    }
     
     (*flow_ctrl) = uart->flow_ctrl;
     return 0;
@@ -413,8 +441,10 @@ int libUART_get_pin(uart_t *uart, int pin, int *state)
         return -1;
     }
     
-    if (!state)
+    if (!state) {
+        error("invalid <int> pointer", 0);
         return -1;
+    }
     
     return uart_get_pin(uart, pin, state);
 }
@@ -426,8 +456,10 @@ int libUART_get_bytes_available(uart_t *uart, int *num)
         return -1;
     }
     
-    if (!num)
+    if (!num) {
+        error("invalid <int> pointer", 0);
         return -1;
+    }
     
     return uart_get_bytes(uart, num);
 }

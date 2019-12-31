@@ -5,9 +5,9 @@
  * Project  : libUART
  * Author   : Copyright (C) 2018-2019 Johannes Krottmayer <krjdev@gmail.com>
  * Created  : 2019-11-20
- * Modified : 2019-11-30
+ * Modified : 2019-12-31
  * Revised  : 
- * Version  : 0.2.0.0
+ * Version  : 0.4.1.0
  * License  : ISC (see file LICENSE.txt)
  *
  * NOTE: This code is currently below version 1.0, and therefore is considered
@@ -20,7 +20,7 @@
 #define LIBUART_VERSION_H
 
 #define LIBUART_NAME            "libUART"
-#define LIBUART_VERSION         "0.4.0.0"
+#define LIBUART_VERSION         "0.4.1.0"
 #define LIBUART_COPYRIGHT       "Copyright (C) 2018-2019 Johannes Krottmayer <krjdev@gmail.com>"
 
 #endif
