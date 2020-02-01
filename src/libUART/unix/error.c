@@ -3,7 +3,7 @@
  * File Name: unix/error.c
  * Title    : libUART UNIX Error handling
  * Project  : libUART
- * Author   : Copyright (C) 2018-2019 Johannes Krottmayer <krjdev@gmail.com>
+ * Author   : Copyright (C) 2018-2020 Johannes Krottmayer <krjdev@gmail.com>
  * Created  : 2019-11-20
  * Modified : 
  * Revised  : 
