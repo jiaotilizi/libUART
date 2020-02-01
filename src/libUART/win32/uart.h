@@ -3,11 +3,11 @@
  * File Name: win32/uart.h
  * Title    : WIN32 UART library
  * Project  : libUART
- * Author   : Copyright (C) 2018-2019 Johannes Krottmayer <krjdev@gmail.com>
+ * Author   : Copyright (C) 2018-2020 Johannes Krottmayer <krjdev@gmail.com>
  * Created  : 2019-11-20
- * Modified : 2019-11-30
+ * Modified : 2020-01-30
  * Revised  : 
- * Version  : 0.1.0.0
+ * Version  : 0.1.1.0
  * License  : ISC (see file LICENSE.txt)
  *
  * NOTE: This code is currently below version 1.0, and therefore is considered
@@ -44,6 +44,7 @@ extern int uart_open(struct _uart *uart);
 extern void uart_close(struct _uart *uart);
 extern int uart_send(struct _uart *uart, char *send_buf, int len);
 extern int uart_recv(struct _uart *uart, char *recv_buf, int len);
+extern int uart_flush(struct _uart *uart);
 extern int uart_set_pin(struct _uart *uart, int pin, int state);
 extern int uart_get_pin(struct _uart *uart, int pin, int *state);
 extern int uart_get_bytes(struct _uart *uart, int *bytes);

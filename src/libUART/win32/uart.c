@@ -3,11 +3,11 @@
  * File Name: win32/uart.c
  * Title    : WIN32 UART
  * Project  : libUART
- * Author   : Copyright (C) 2018-2019 Johannes Krottmayer <krjdev@gmail.com>
+ * Author   : Copyright (C) 2018-2020 Johannes Krottmayer <krjdev@gmail.com>
  * Created  : 2019-11-20
- * Modified : 2019-11-30
+ * Modified : 2020-01-30
  * Revised  : 
- * Version  : 0.2.0.0
+ * Version  : 0.2.1.0
  * License  : ISC (see file LICENSE.txt)
  *
  * NOTE: This code is currently below version 1.0, and therefore is considered
@@ -405,6 +405,20 @@ int uart_recv(struct _uart *uart, char *recv_buf, int len)
     
     ret = (int) dwbytesread;
     return ret;
+}
+
+int uart_flush(struct _uart *uart)
+{
+    int ret;
+    
+    ret = FlushFileBuffers(uart->h);
+    
+    if (!ret) {
+        error("FlushFileBuffers() failed", 1);
+        return -1;
+    }
+
+    return 0;
 }
 
 int uart_set_pin(struct _uart *uart, int pin, int state)
