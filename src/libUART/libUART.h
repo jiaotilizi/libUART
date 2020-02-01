@@ -3,11 +3,11 @@
  * File Name: libUART.h
  * Title    : libUART header
  * Project  : libUART
- * Author   : Copyright (C) 2018-1019 Johannes Krottmayer <krjdev@gmail.com>
+ * Author   : Copyright (C) 2018-2020 Johannes Krottmayer <krjdev@gmail.com>
  * Created  : 2018-05-21
- * Modified : 2019-11-30
+ * Modified : 2020-01-30
  * Revised  : 
- * Version  : 0.4.0.0
+ * Version  : 0.4.2.0
  * License  : ISC (see file LICENSE.txt)
  *
  * NOTE: This code is currently below version 1.0, and therefore is considered
@@ -116,6 +116,7 @@ extern int libUART_send(uart_t *uart, char *send_buf, int len);
 extern int libUART_recv(uart_t *uart, char *recv_buf, int len);
 extern int libUART_puts(uart_t *uart, char *msg);
 extern int libUART_getc(uart_t *uart, char *c);
+extern int libUART_flush(uart_t *uart);
 extern int libUART_set_baud(uart_t *uart, int baud);
 extern int libUART_get_baud(uart_t *uart, int *baud);
 extern int libUART_get_fd(uart_t *uart, int *fd);
@@ -142,6 +143,7 @@ extern LIBUART_API int libUART_send(uart_t *uart, char *send_buf, int len);
 extern LIBUART_API int libUART_recv(uart_t *uart, char *recv_buf, int len);
 extern LIBUART_API int libUART_puts(uart_t *uart, char *msg);
 extern LIBUART_API int libUART_getc(uart_t *uart, char *c);
+extern LIBUART_API int libUART_flush(uart_t *uart);
 extern LIBUART_API int libUART_set_baud(uart_t *uart, int baud);
 extern LIBUART_API int libUART_get_baud(uart_t *uart, int *baud);
 extern LIBUART_API int libUART_get_handle(uart_t *uart, HANDLE *handle);
