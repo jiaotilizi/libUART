@@ -3,11 +3,11 @@
  * File Name: uart.c
  * Title    : libUART
  * Project  : libUART
- * Author   : Copyright (C) 2018-1019 Johannes Krottmayer <krjdev@gmail.com>
+ * Author   : Copyright (C) 2018-2020 Johannes Krottmayer <krjdev@gmail.com>
  * Created  : 2018-05-21
- * Modified : 2019-12-31
+ * Modified : 2020-01-30
  * Revised  : 
- * Version  : 0.5.1.0
+ * Version  : 0.5.2.0
  * License  : ISC (see file LICENSE.txt)
  *
  * NOTE: This code is currently below version 1.0, and therefore is considered
@@ -204,17 +204,6 @@ int libUART_recv(uart_t *uart, char *recv_buf, int len)
     return uart_recv(uart, recv_buf, len);
 }
 
-int libUART_set_baud(uart_t *uart, int baud)
-{
-    if (!uart) {
-        error("invalid <uart_t> object", 0);
-        return -1;
-    }
-    
-    uart->baud = baud;
-    return uart_init_baud(uart);
-}
-
 int libUART_puts(uart_t *uart, char *msg)
 {
     if (!uart) {
@@ -248,6 +237,27 @@ int libUART_getc(uart_t *uart, char *c)
     ret = uart_recv(uart, &buf[0], 1);
     (*c) = buf[0];
     return ret;
+}
+
+int libUART_flush(uart_t *uart)
+{
+    if (!uart) {
+        error("invalid <uart_t> object", 0);
+        return -1;
+    }
+    
+    return uart_flush(uart);
+}
+
+int libUART_set_baud(uart_t *uart, int baud)
+{
+    if (!uart) {
+        error("invalid <uart_t> object", 0);
+        return -1;
+    }
+    
+    uart->baud = baud;
+    return uart_init_baud(uart);
 }
 
 int libUART_get_baud(uart_t *uart, int *baud)
