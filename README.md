@@ -106,6 +106,21 @@ Arg | Description
 On success, the number of received bytes will be returned. On error, *-1* will be returned.
 
 ```c
+int libUART_flush(uart_t *uart);
+```
+
+Flush buffers.
+
+### Arguments:
+Arg | Description
+--- | -----------
+*uart* | The *uart_t* object
+
+#### Return:
+On success, *0* will be returned. On error, *-1* will be returned.
+
+
+```c
 int libUART_set_baud(uart_t *uart, int baud);
 ```
 
@@ -362,7 +377,7 @@ On success, *0* will be returned. On error, *-1* will be returned.
 ```c
 void libUART_set_error(int enable);
 ```
-Enable or disable error message output.
+Enable or disable error message output (Default enabled).
 
 ```c
 char *libUART_get_libname(void);
@@ -377,13 +392,13 @@ char *libUART_get_libversion(void);
 Get the library version.
 
 ```c
-char *libUART_get_libname(void);
+char *libUART_get_libcopyright(void);
 ```
 
 Get the library copyright.
 
 # LICENSE
-> Copyright (c) 2018-2019 [Johannes Krottmayer](mailto:krjdev@gmail.com)  
+> Copyright (c) 2018-2020 [Johannes Krottmayer](mailto:krjdev@gmail.com)  
 >  
 > Permission to use, copy, modify, and/or distribute this software for any  
 > purpose with or without fee is hereby granted, provided that the above  
