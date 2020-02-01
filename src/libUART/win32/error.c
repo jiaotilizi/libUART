@@ -3,7 +3,7 @@
  * File Name: win32/error.c
  * Title    : WIN32 Error handling
  * Project  : libUART
- * Author   : Copyright (C) 2018-2019 Johannes Krottmayer <krjdev@gmail.com>
+ * Author   : Copyright (C) 2018-2020 Johannes Krottmayer <krjdev@gmail.com>
  * Created  : 2019-11-19
  * Modified : 
  * Revised  : 
