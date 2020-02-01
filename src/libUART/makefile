@@ -9,8 +9,8 @@ CFLAGS 	= -Wall -fPIC
 LDFLAGS = -shared -Wl,-soname,$(TARGET)
 
 SRC += unix/error.c
-SRC += unix/unix_uart.c
-SRC += uart.c
+SRC += unix/uart.c
+SRC += main.c
 SRC += util.c
 
 OBJ = $(SRC:.c=.o)
