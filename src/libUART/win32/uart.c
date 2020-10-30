@@ -1,4 +1,4 @@
-/**
+﻿/**
  *
  * File Name: win32/uart.c
  * Title    : WIN32 UART
@@ -43,7 +43,8 @@ int uart_baud_valid(int value)
         UART_BAUD_57600,
         UART_BAUD_115200,
         UART_BAUD_128000,
-        UART_BAUD_256000
+        UART_BAUD_256000,
+        UART_BAUD_921600
     };
     
     if (enum_contains(E, sizeof(E)/sizeof(E[0]), value))
@@ -51,6 +52,10 @@ int uart_baud_valid(int value)
     
     return 0;
 }
+
+#ifndef CBR_921600
+#define CBR_921600 921600
+#endif
 
 int uart_init_baud(struct _uart *uart)
 {
@@ -105,12 +110,18 @@ int uart_init_baud(struct _uart *uart)
     case UART_BAUD_256000:
         dcb.BaudRate = CBR_256000;
         break;
+    case UART_BAUD_921600:
+        dcb.BaudRate = CBR_921600;
+        break;
     default:
         error("invalid Baud Rate", 0);
         return -1;
     }
     
     ret = SetCommState(uart->h, &dcb);
+
+    //ret |= GetCommState(uart->h, &dcb);
+    //printf("Baud Rate is %d", dcb.BaudRate);
     
     if (!ret) {
         error("SetCommState() failed", 1);
@@ -349,6 +360,24 @@ int uart_open(struct _uart *uart)
         CloseHandle(h);
         return -1;
     }
+
+    COMMTIMEOUTS commTimeouts = { 0 };
+    /* Do not block. Return immediately. */
+    commTimeouts.ReadIntervalTimeout = MAXDWORD;
+    commTimeouts.ReadTotalTimeoutConstant = 0;
+    commTimeouts.ReadTotalTimeoutMultiplier = 0;
+    if (!SetCommTimeouts(uart->h, &commTimeouts)) {
+        fprintf(stderr, "Error setting comm timeouts %d.\n", GetLastError());
+    }
+    if (!GetCommTimeouts(uart->h, &commTimeouts)) {
+        fprintf(stderr, "Error getting comm timeouts %d.\n", GetLastError());
+    } else {
+        fprintf(stdout, "getting comm timeouts %d %d %d %d %d.\n", commTimeouts.ReadIntervalTimeout,
+                                                        commTimeouts.ReadTotalTimeoutConstant,
+                                                        commTimeouts.ReadTotalTimeoutMultiplier,
+                                                        commTimeouts.WriteTotalTimeoutMultiplier,
+                                                        commTimeouts.WriteTotalTimeoutConstant);
+    }
     
     return 0;
 }
@@ -399,7 +428,7 @@ int uart_recv(struct _uart *uart, char *recv_buf, int len)
                    NULL);
     
     if (!ret) {
-        error("ReadFile() failed", 1);
+        //error("ReadFile() failed", 1);
         return -1;
     }
     

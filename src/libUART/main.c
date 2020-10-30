@@ -1,4 +1,4 @@
-/**
+﻿/**
  *
  * File Name: uart.c
  * Title    : libUART
@@ -221,7 +221,7 @@ int libUART_puts(uart_t *uart, char *msg)
 
 int libUART_getc(uart_t *uart, char *c)
 {
-    char buf[1];
+    char buf[1] = {'\0'};
     int ret;
     
     if (!uart) {

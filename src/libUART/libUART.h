@@ -1,4 +1,4 @@
-/**
+﻿/**
  *
  * File Name: libUART.h
  * Title    : libUART header
@@ -67,7 +67,8 @@ enum e_baud {
     UART_BAUD_115200 = 115200,
 #ifdef _WIN32
     UART_BAUD_128000 = 128000,
-    UART_BAUD_256000 = 256000
+    UART_BAUD_256000 = 256000,
+    UART_BAUD_921600 = 921600
 #elif __unix__
     UART_BAUD_230400 = 230400,
     UART_BAUD_460800 = 460800,
